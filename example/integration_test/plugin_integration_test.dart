@@ -8,7 +8,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-
 import 'package:device_identifier/device_identifier.dart';
 
 void main() {
@@ -18,7 +17,6 @@ void main() {
     final String? identifier = await DeviceIdentifier.getIdentifier();
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
-    expect(identifier?.isNotEmpty, true);
     expect(identifier?.isNotEmpty, true);
   });
 }
