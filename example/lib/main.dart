@@ -1,5 +1,7 @@
 import 'package:device_identifier/device_identifier.dart';
 import 'package:flutter/foundation.dart';
+import 'package:device_identifier/device_identifier.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -23,9 +25,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initIdentifierState();
+    initIdentifierState();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initIdentifierState() async {
+    String? deviceIdentifier;
   Future<void> initIdentifierState() async {
     String? deviceIdentifier;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -33,6 +38,12 @@ class _MyAppState extends State<MyApp> {
     try {
       deviceIdentifier = await DeviceIdentifier.getIdentifier();
     } on PlatformException {
+      if (kDebugMode) {
+        print(
+          'Failed to get platform version. Device Identifier: $deviceIdentifier',
+        );
+      }
+      deviceIdentifier = 'Failed to get platform version.';
       if (kDebugMode) {
         print(
           'Failed to get platform version. Device Identifier: $deviceIdentifier',
@@ -48,6 +59,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _deviceIdentifier = deviceIdentifier!;
+      _deviceIdentifier = deviceIdentifier!;
     });
   }
 
@@ -55,6 +67,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(title: const Text('Plugin example app')),
+        body: Center(child: Text('Device Identifier: $_deviceIdentifier\n')),
         appBar: AppBar(title: const Text('Plugin example app')),
         body: Center(child: Text('Device Identifier: $_deviceIdentifier\n')),
       ),
