@@ -1,8 +1,9 @@
+import 'package:device_identifier/device_identifier.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:device_identifier/device_identifier.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,25 +17,29 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _deviceIdentifier = 'Unknown';
   final _deviceIdentifierPlugin = DeviceIdentifier();
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initIdentifierState();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
+  Future<void> initIdentifierState() async {
+    String? deviceIdentifier;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _deviceIdentifierPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      deviceIdentifier = await _deviceIdentifierPlugin.getIdentifier();
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      if (kDebugMode) {
+        print(
+          'Failed to get platform version. Device Identifier: $deviceIdentifier',
+        );
+      }
+      deviceIdentifier = 'Failed to get platform version.';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -43,7 +48,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _deviceIdentifier = deviceIdentifier!;
     });
   }
 
@@ -51,12 +56,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+        appBar: AppBar(title: const Text('Plugin example app')),
+        body: Center(child: Text('Device Identifier: $_deviceIdentifier\n')),
       ),
     );
   }

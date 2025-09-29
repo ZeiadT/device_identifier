@@ -23,7 +23,7 @@ abstract class DeviceIdentifierPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<String> getIdentifier() async {
+    throw UnimplementedError('getIdentifier() has not been implemented.');
   }
 }

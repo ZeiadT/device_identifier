@@ -10,8 +10,21 @@ class MethodChannelDeviceIdentifier extends DeviceIdentifierPlatform {
   final methodChannel = const MethodChannel('device_identifier');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<String> getIdentifier() async {
+    try {
+      final String identifier =
+          await methodChannel.invokeMethod('getIdentifier') ?? "0";
+
+      if (kDebugMode) {
+        print("Device identifier: '$identifier'.");
+      }
+
+      return identifier;
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print("Failed to get device identifier: '${e.message}'.");
+      }
+      return "0";
+    }
   }
 }

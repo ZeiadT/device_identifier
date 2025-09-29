@@ -7,13 +7,13 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockDeviceIdentifierPlatform
     with MockPlatformInterfaceMixin
     implements DeviceIdentifierPlatform {
-
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<String> getIdentifier() => Future.value('42');
 }
 
 void main() {
-  final DeviceIdentifierPlatform initialPlatform = DeviceIdentifierPlatform.instance;
+  final DeviceIdentifierPlatform initialPlatform =
+      DeviceIdentifierPlatform.instance;
 
   test('$MethodChannelDeviceIdentifier is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelDeviceIdentifier>());
@@ -24,6 +24,6 @@ void main() {
     MockDeviceIdentifierPlatform fakePlatform = MockDeviceIdentifierPlatform();
     DeviceIdentifierPlatform.instance = fakePlatform;
 
-    expect(await deviceIdentifierPlugin.getPlatformVersion(), '42');
+    expect(await deviceIdentifierPlugin.getIdentifier(), '42');
   });
 }
