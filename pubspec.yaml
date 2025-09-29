@@ -1,0 +1,31 @@
+name: device_identifier
+description: A Flutter plugin to retrieve a unique and persistent device identifier. Returns ANDROID_ID on Android and uses the Keychain to store a UUID on iOS.
+version: 1.0.0
+homepage: https://github.com/ZeiadT/device_identifier.git
+repository: https://github.com/ZeiadT/device_identifier.git
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+# The following section is specific to Flutter packages.
+flutter:
+  # This section identifies this project as a plugin project.
+  # The 'pluginClass' specifies the class (in native code) that initializes the plugin.
+  plugin:
+    platforms:
+      android:
+        package: com.example.device_identifier
+        pluginClass: DeviceIdentifierPlugin
+      ios:
+        pluginClass: DeviceIdentifierPlugin
