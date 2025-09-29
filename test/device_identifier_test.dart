@@ -9,9 +9,12 @@ class MockDeviceIdentifierPlatform
     implements DeviceIdentifierPlatform {
   @override
   Future<String> getIdentifier() => Future.value('42');
+  Future<String> getIdentifier() => Future.value('42');
 }
 
 void main() {
+  final DeviceIdentifierPlatform initialPlatform =
+      DeviceIdentifierPlatform.instance;
   final DeviceIdentifierPlatform initialPlatform =
       DeviceIdentifierPlatform.instance;
 
